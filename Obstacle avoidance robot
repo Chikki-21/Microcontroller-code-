@@ -1,0 +1,49 @@
+// obstacle avoiding robot
+const int TRIG = 11;
+const int ECHO = 12;
+const int LDR1 = 3;
+const int LDR2 = 4;
+const int LDR3 = 5;
+const int LDR4 = 6;
+const int EN1 = 9;
+const int EN2 = 10;
+
+void setup()
+{
+  pinMode(TRIG,OUTPUT);//Take the pulse
+  pinMode(ECHO,INPUT);//Read the pulse
+  pinMode(LDR1,OUTPUT);
+  pinMode(LDR2,OUTPUT);
+  pinMode(LDR3,OUTPUT);
+  pinMode(LDR4,OUTPUT);
+  Serial.begin(9600);
+}
+int DURATION;
+int DISTANCE;
+void loop()
+{
+  analogWrite(EN1,100);
+  analogWrite(EN2,100);
+  digitalWrite(TRIG,LOW);
+  delay(2);
+  digitalWrite(TRIG,HIGH);
+  delay(10);
+  digitalWrite(TRIG,LOW);
+  DURATION = pulseIn(ECHO,HIGH);
+  DISTANCE = DURATION*0.034/2;
+  Serial.println(DISTANCE);
+  if(DISTANCE<=50)
+  {
+    digitalWrite(LDR1,LOW);
+    digitalWrite(LDR2,HIGH);
+    digitalWrite(LDR3,HIGH);
+    digitalWrite(LDR4,LOW);
+  }
+  else
+  {
+    digitalWrite(LDR1,HIGH);
+    digitalWrite(LDR2,LOW);
+    digitalWrite(LDR3,HIGH);
+    digitalWrite(LDR4,LOW);
+  }
+}
